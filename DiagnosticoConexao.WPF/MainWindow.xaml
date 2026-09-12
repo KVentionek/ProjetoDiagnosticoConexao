@@ -1,0 +1,838 @@
+﻿<Window x:Class="DiagnosticoConexao.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Diagnóstico de Conexão"
+        Height="900"
+        Width="1300"
+        MinHeight="800"
+        MinWidth="1100"
+        Background="#0F1116"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize">
+
+    <Window.Resources>
+
+        <!-- ========================================================= -->
+        <!-- CORES -->
+        <!-- ========================================================= -->
+
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#0F1116"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#191C23"/>
+        <SolidColorBrush x:Key="CardHoverBrush" Color="#1E222B"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#272B35"/>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#E05A9D"/>
+        <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#EB70AD"/>
+        <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#C94788"/>
+
+        <SolidColorBrush x:Key="TextBrush" Color="#F5F5F7"/>
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#9297A3"/>
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#6F7480"/>
+
+        <!-- ========================================================= -->
+        <!-- SOMBRA DOS CARDS -->
+        <!-- ========================================================= -->
+
+        <DropShadowEffect x:Key="CardShadow"
+                          Color="#000000"
+                          BlurRadius="18"
+                          ShadowDepth="4"
+                          Opacity="0.30"/>
+
+        <DropShadowEffect x:Key="ButtonShadow"
+                          Color="#000000"
+                          BlurRadius="12"
+                          ShadowDepth="3"
+                          Opacity="0.35"/>
+
+
+        <!-- ========================================================= -->
+        <!-- ESTILO DOS BOTÕES -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="ModernButton"
+               TargetType="{x:Type Button}">
+
+            <Setter Property="Background"
+                    Value="{StaticResource PrimaryBrush}"/>
+
+            <Setter Property="Foreground"
+                    Value="White"/>
+
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+
+            <Setter Property="FontSize"
+                    Value="13"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+            <Setter Property="Padding"
+                    Value="18,0"/>
+
+            <Setter Property="Effect"
+                    Value="{StaticResource ButtonShadow}"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type Button}">
+
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="9"
+                                Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- HOVER -->
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="{StaticResource PrimaryHoverBrush}"/>
+
+                            </Trigger>
+
+
+                            <!-- PRESSIONADO -->
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="{StaticResource PrimaryPressedBrush}"/>
+
+                            </Trigger>
+
+
+                            <!-- DESABILITADO -->
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- BOTÕES SECUNDÁRIOS -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="SecondaryButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ModernButton}">
+
+            <Setter Property="Background"
+                    Value="#292D36"/>
+
+            <Setter Property="Foreground"
+                    Value="#F5F5F7"/>
+
+            <Setter Property="Effect"
+                    Value="{StaticResource ButtonShadow}"/>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- ESTILO DOS CARDS -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="CardStyle"
+               TargetType="{x:Type Border}">
+
+            <Setter Property="Background"
+                    Value="{StaticResource CardBrush}"/>
+
+            <Setter Property="CornerRadius"
+                    Value="14"/>
+
+            <Setter Property="Effect"
+                    Value="{StaticResource CardShadow}"/>
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <!-- ============================================================= -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ============================================================= -->
+
+    <Grid Margin="30">
+
+        <Grid.RowDefinitions>
+
+            <!-- Cabeçalho -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- Espaço -->
+            <RowDefinition Height="24"/>
+
+            <!-- Cards de status -->
+            <RowDefinition Height="Auto"/>
+
+            <!-- Espaço -->
+            <RowDefinition Height="24"/>
+
+            <!-- Conteúdo -->
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+
+        <!-- ========================================================= -->
+        <!-- CABEÇALHO -->
+        <!-- ========================================================= -->
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+
+
+            <StackPanel>
+
+                <TextBlock
+                    Text="DIAGNÓSTICO DE CONEXÃO"
+                    Foreground="{StaticResource TextBrush}"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    TextOptions.TextFormattingMode="Display"/>
+
+                <TextBlock
+                    Text="Monitoramento e análise da rede"
+                    Foreground="{StaticResource SecondaryTextBrush}"
+                    FontSize="14"
+                    Margin="0,7,0,0"/>
+
+            </StackPanel>
+
+
+            <Button
+                Grid.Column="1"
+                Content="Executar diagnóstico"
+                Width="190"
+                Height="46"
+                Style="{StaticResource ModernButton}"
+                Click="ExecutarDiagnostico_Click"/>
+
+        </Grid>
+
+
+        <!-- ========================================================= -->
+        <!-- CARDS DE STATUS -->
+        <!-- ========================================================= -->
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="18"/>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="18"/>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="18"/>
+
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+
+            <!-- ===================================================== -->
+            <!-- INTERNET -->
+            <!-- ===================================================== -->
+
+            <Border
+                Grid.Column="0"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Text="INTERNET"
+                        Foreground="{StaticResource SecondaryTextBrush}"
+                        FontSize="12"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        x:Name="TxtInternet"
+                        Text="--"
+                        Foreground="{StaticResource SecondaryTextBrush}"
+                        FontSize="26"
+                        FontWeight="Bold"
+                        Margin="0,8,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <!-- ===================================================== -->
+            <!-- LATÊNCIA -->
+            <!-- ===================================================== -->
+
+            <Border
+                Grid.Column="2"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Text="LATÊNCIA"
+                        Foreground="{StaticResource SecondaryTextBrush}"
+                        FontSize="12"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        x:Name="TxtLatency"
+                        Text="--"
+                        Foreground="{StaticResource TextBrush}"
+                        FontSize="26"
+                        FontWeight="Bold"
+                        Margin="0,8,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <!-- ===================================================== -->
+            <!-- PERDA DE PACOTES -->
+            <!-- ===================================================== -->
+
+            <Border
+                Grid.Column="4"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Text="PERDA DE PACOTES"
+                        Foreground="{StaticResource SecondaryTextBrush}"
+                        FontSize="12"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        x:Name="TxtPacketLoss"
+                        Text="--"
+                        Foreground="{StaticResource TextBrush}"
+                        FontSize="26"
+                        FontWeight="Bold"
+                        Margin="0,8,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <!-- ===================================================== -->
+            <!-- SEGURANÇA -->
+            <!-- ===================================================== -->
+
+            <Border
+                Grid.Column="6"
+                Style="{StaticResource CardStyle}"
+                Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Text="SEGURANÇA"
+                        Foreground="{StaticResource SecondaryTextBrush}"
+                        FontSize="12"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock x:Name="TxtSecurity"
+                        Text="--"
+                        Foreground="#F0B35A"
+                        FontSize="26"
+                        FontWeight="Bold"
+                        Margin="0,8,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+
+        <!-- ========================================================= -->
+        <!-- CONTEÚDO PRINCIPAL -->
+        <!-- ========================================================= -->
+
+        <Grid Grid.Row="4">
+
+            <Grid.RowDefinitions>
+
+                <!-- Rede + análise -->
+                <RowDefinition Height="*"/>
+
+                <!-- Espaço -->
+                <RowDefinition Height="24"/>
+
+                <!-- Módulos -->
+                <RowDefinition Height="175"/>
+
+            </Grid.RowDefinitions>
+
+
+            <!-- ===================================================== -->
+            <!-- INFORMAÇÕES DA REDE + ANÁLISE -->
+            <!-- ===================================================== -->
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="20"/>
+
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <!-- ================================================= -->
+                <!-- INFORMAÇÕES DA REDE -->
+                <!-- ================================================= -->
+
+                <Border
+                    Grid.Column="0"
+                    Style="{StaticResource CardStyle}"
+                    Padding="24">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="Auto"/>
+
+                            <RowDefinition Height="20"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Text="INFORMAÇÕES DA REDE"
+                            Foreground="{StaticResource TextBrush}"
+                            FontSize="16"
+                            FontWeight="Bold"/>
+
+
+                        <Grid Grid.Row="2">
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="130"/>
+
+                                <ColumnDefinition Width="*"/>
+
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+
+                            <!-- INTERFACE -->
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Text="Interface"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtInterface"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- TIPO -->
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Text="Tipo"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtNetworkType"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- IPV4 -->
+
+                            <TextBlock
+                                Grid.Row="4"
+                                Text="IPv4"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtIPv4"
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- MÁSCARA -->
+
+                            <TextBlock
+                                Grid.Row="6"
+                                Text="Máscara"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtSubnetMask"
+                                Grid.Row="6"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- CIDR -->
+
+                            <TextBlock
+                                Grid.Row="8"
+                                Text="CIDR"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtCidr"
+                                Grid.Row="8"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- REDE -->
+
+                            <TextBlock
+                                Grid.Row="10"
+                                Text="Rede"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtNetworkAddress"
+                                Grid.Row="10"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- GATEWAY -->
+
+                            <TextBlock
+                                Grid.Row="12"
+                                Text="Gateway"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtGateway"
+                                Grid.Row="12"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- DNS -->
+
+                            <TextBlock
+                                Grid.Row="14"
+                                Text="DNS"
+                                Foreground="{StaticResource SecondaryTextBrush}"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="TxtDns"
+                                Grid.Row="14"
+                                Grid.Column="1"
+                                Text="--"
+                                Foreground="{StaticResource TextBrush}"
+                                VerticalAlignment="Center"
+                                TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+
+                <!-- ================================================= -->
+                <!-- ANÁLISE DA CONEXÃO -->
+                <!-- ================================================= -->
+
+                <Border
+                    Grid.Column="2"
+                    Style="{StaticResource CardStyle}"
+                    Padding="24">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="Auto"/>
+
+                            <RowDefinition Height="20"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Text="ANÁLISE DA CONEXÃO"
+                            Foreground="{StaticResource TextBrush}"
+                            FontSize="16"
+                            FontWeight="Bold"/>
+
+
+                        <ScrollViewer
+                            Grid.Row="2"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Disabled">
+
+                            <TextBlock
+                                x:Name="TxtAnalysis"
+                                Text="Aguardando diagnóstico..."
+                                Foreground="#D5D7DC"
+                                FontSize="14"
+                                LineHeight="23"
+                                TextWrapping="Wrap"/>
+
+                        </ScrollViewer>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+
+            <!-- ===================================================== -->
+            <!-- MÓDULOS -->
+            <!-- ===================================================== -->
+
+            <Grid Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="20"/>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="20"/>
+
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <!-- ================================================= -->
+                <!-- TRACEROUTE -->
+                <!-- ================================================= -->
+
+                <Border
+                    Grid.Column="0"
+                    Style="{StaticResource CardStyle}"
+                    Padding="22">
+
+                    <StackPanel>
+
+                        <TextBlock
+                            Text="TRACEROUTE"
+                            Foreground="{StaticResource TextBrush}"
+                            FontSize="15"
+                            FontWeight="Bold"/>
+
+                        <TextBlock
+                            Text="Analise o caminho até um destino."
+                            Foreground="{StaticResource SecondaryTextBrush}"
+                            FontSize="13"
+                            Margin="0,8,0,18"/>
+
+                        <Button
+                            Content="Abrir Traceroute"
+                            Width="160"
+                            Height="38"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButton}"
+                            Click="AbrirTraceroute_Click"/>
+
+                    </StackPanel>
+
+                </Border>
+
+
+                <!-- ================================================= -->
+                <!-- TESTE DE PORTAS -->
+                <!-- ================================================= -->
+
+                <Border
+                    Grid.Column="2"
+                    Style="{StaticResource CardStyle}"
+                    Padding="22">
+
+                    <StackPanel>
+
+                        <TextBlock
+                            Text="TESTE DE PORTAS"
+                            Foreground="{StaticResource TextBrush}"
+                            FontSize="15"
+                            FontWeight="Bold"/>
+
+                        <TextBlock
+                            Text="Verifique portas de um destino."
+                            Foreground="{StaticResource SecondaryTextBrush}"
+                            FontSize="13"
+                            Margin="0,8,0,18"/>
+
+                        <Button
+                            Content="Abrir teste de portas"
+                            Width="180"
+                            Height="38"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButton}"
+                            Click="AbrirTestePortas_Click"/>
+
+                    </StackPanel>
+
+                </Border>
+
+
+                <!-- ================================================= -->
+                <!-- SEGURANÇA -->
+                <!-- ================================================= -->
+
+                <Border
+                    Grid.Column="4"
+                    Style="{StaticResource CardStyle}"
+                    Padding="22">
+
+                    <StackPanel>
+
+                        <TextBlock
+                            Text="SEGURANÇA"
+                            Foreground="{StaticResource TextBrush}"
+                            FontSize="15"
+                            FontWeight="Bold"/>
+
+                        <TextBlock
+                            Text="Veja os detalhes da auditoria."
+                            Foreground="{StaticResource SecondaryTextBrush}"
+                            FontSize="13"
+                            Margin="0,8,0,18"/>
+
+                        <Button
+                            Content="Ver análise"
+                            Width="130"
+                            Height="38"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButton}"
+                            Click="AbrirSeguranca_Click"/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+</Window>
