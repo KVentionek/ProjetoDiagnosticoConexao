@@ -8,23 +8,40 @@
         MinWidth="900"
         Background="#0F1116"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="CanResize">
+        ResizeMode="CanResize"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
 
     <Window.Resources>
 
         <!-- CORES -->
 
-        <SolidColorBrush x:Key="CardBrush" Color="#191C23"/>
-        <SolidColorBrush x:Key="BorderBrush" Color="#272B35"/>
+        <SolidColorBrush x:Key="CardBrush"
+                         Color="#191C23"/>
 
-        <SolidColorBrush x:Key="PrimaryBrush" Color="#E05A9D"/>
-        <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#EB70AD"/>
-        <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#C94788"/>
+        <SolidColorBrush x:Key="PrimaryBrush"
+                         Color="#E05A9D"/>
 
-        <SolidColorBrush x:Key="TextBrush" Color="#F5F5F7"/>
-        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#9297A3"/>
+        <SolidColorBrush x:Key="PrimaryHoverBrush"
+                         Color="#EB70AD"/>
 
-        <!-- SOMBRAS -->
+        <SolidColorBrush x:Key="PrimaryPressedBrush"
+                         Color="#C94788"/>
+
+        <SolidColorBrush x:Key="TextBrush"
+                         Color="#F5F5F7"/>
+
+        <SolidColorBrush x:Key="SecondaryTextBrush"
+                         Color="#9297A3"/>
+
+        <SolidColorBrush x:Key="BorderBrush"
+                         Color="#272B35"/>
+
+        <SolidColorBrush x:Key="CardBorderBrush"
+                         Color="#272B35"/>
+
+
+        <!-- SOMBRA -->
 
         <DropShadowEffect x:Key="CardShadow"
                           Color="#000000"
@@ -32,20 +49,11 @@
                           ShadowDepth="4"
                           Opacity="0.30"/>
 
-        <DropShadowEffect x:Key="ButtonShadow"
-                          Color="#000000"
-                          BlurRadius="12"
-                          ShadowDepth="3"
-                          Opacity="0.35"/>
 
-
-        <!-- BOTÃO PRINCIPAL -->
+        <!-- BOTÃO 3D -->
 
         <Style x:Key="ModernButton"
                TargetType="{x:Type Button}">
-
-            <Setter Property="Background"
-                    Value="{StaticResource PrimaryBrush}"/>
 
             <Setter Property="Foreground"
                     Value="White"/>
@@ -65,19 +73,75 @@
             <Setter Property="Padding"
                     Value="18,0"/>
 
-            <Setter Property="Effect"
-                    Value="{StaticResource ButtonShadow}"/>
+            <Setter Property="Effect">
+
+                <Setter.Value>
+
+                    <DropShadowEffect
+                        Color="#000000"
+                        BlurRadius="14"
+                        ShadowDepth="6"
+                        Opacity="0.65"/>
+
+                </Setter.Value>
+
+            </Setter>
 
             <Setter Property="Template">
 
                 <Setter.Value>
 
-                    <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate
+                        TargetType="{x:Type Button}">
 
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="9"
-                                Padding="{TemplateBinding Padding}">
+                        <Border
+                            x:Name="ButtonBorder"
+                            CornerRadius="10"
+                            BorderThickness="1">
+
+                            <Border.Background>
+
+                                <LinearGradientBrush
+                                    StartPoint="0,0"
+                                    EndPoint="0,1">
+
+                                    <GradientStop
+                                        Color="#F47DB7"
+                                        Offset="0"/>
+
+                                    <GradientStop
+                                        Color="#E05A9D"
+                                        Offset="0.45"/>
+
+                                    <GradientStop
+                                        Color="#B83D79"
+                                        Offset="1"/>
+
+                                </LinearGradientBrush>
+
+                            </Border.Background>
+
+                            <Border.BorderBrush>
+
+                                <LinearGradientBrush
+                                    StartPoint="0,0"
+                                    EndPoint="0,1">
+
+                                    <GradientStop
+                                        Color="#FFB6D8"
+                                        Offset="0"/>
+
+                                    <GradientStop
+                                        Color="#E05A9D"
+                                        Offset="0.5"/>
+
+                                    <GradientStop
+                                        Color="#8F2F60"
+                                        Offset="1"/>
+
+                                </LinearGradientBrush>
+
+                            </Border.BorderBrush>
 
                             <ContentPresenter
                                 HorizontalAlignment="Center"
@@ -86,32 +150,77 @@
 
                         </Border>
 
+
                         <ControlTemplate.Triggers>
 
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
+                            <Trigger
+                                Property="IsMouseOver"
+                                Value="True">
 
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="{StaticResource PrimaryHoverBrush}"/>
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Background">
+
+                                    <Setter.Value>
+
+                                        <LinearGradientBrush
+                                            StartPoint="0,0"
+                                            EndPoint="0,1">
+
+                                            <GradientStop
+                                                Color="#FF9BC9"
+                                                Offset="0"/>
+
+                                            <GradientStop
+                                                Color="#F27DB5"
+                                                Offset="0.45"/>
+
+                                            <GradientStop
+                                                Color="#C94885"
+                                                Offset="1"/>
+
+                                        </LinearGradientBrush>
+
+                                    </Setter.Value>
+
+                                </Setter>
 
                             </Trigger>
 
-                            <Trigger Property="IsPressed"
-                                     Value="True">
 
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="{StaticResource PrimaryPressedBrush}"/>
+                            <Trigger
+                                Property="IsPressed"
+                                Value="True">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="RenderTransform">
+
+                                    <Setter.Value>
+
+                                        <TranslateTransform
+                                            Y="2"/>
+
+                                    </Setter.Value>
+
+                                </Setter>
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Opacity"
+                                    Value="0.90"/>
 
                             </Trigger>
 
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
 
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.45"/>
+                            <Trigger
+                                Property="IsEnabled"
+                                Value="False">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Opacity"
+                                    Value="0.40"/>
 
                             </Trigger>
 
@@ -129,13 +238,19 @@
         <!-- CARD -->
 
         <Style x:Key="CardStyle"
-               TargetType="{x:Type Border}">
+            TargetType="{x:Type Border}">
 
             <Setter Property="Background"
                     Value="{StaticResource CardBrush}"/>
 
             <Setter Property="CornerRadius"
-                    Value="14"/>
+                    Value="18"/>
+
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource CardBorderBrush}"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
 
             <Setter Property="Effect"
                     Value="{StaticResource CardShadow}"/>
@@ -146,7 +261,7 @@
         <!-- TEXTBOX -->
 
         <Style x:Key="ModernTextBox"
-               TargetType="{x:Type TextBox}">
+            TargetType="{x:Type TextBox}">
 
             <Setter Property="Background"
                     Value="#15181E"/>
@@ -172,14 +287,50 @@
             <Setter Property="VerticalContentAlignment"
                     Value="Center"/>
 
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Margin="{TemplateBinding Padding}"/>
+
+                        </Border>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
         </Style>
 
     </Window.Resources>
 
 
-    <!-- CONTEÚDO -->
+    <Grid>
 
-    <Grid Margin="30">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0"
+                                EndPoint="1,1">
+                <GradientStop Color="#080A0F"
+                            Offset="0"/>
+                <GradientStop Color="#10121A"
+                            Offset="0.45"/>
+                <GradientStop Color="#160D18"
+                            Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid Margin="30">
 
         <Grid.RowDefinitions>
 
@@ -189,7 +340,7 @@
 
             <RowDefinition Height="Auto"/>
 
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="24"/>
 
             <RowDefinition Height="*"/>
 
@@ -199,6 +350,15 @@
         <!-- CABEÇALHO -->
 
         <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+
 
             <StackPanel>
 
@@ -221,9 +381,10 @@
 
         <!-- DESTINO -->
 
-        <Border Grid.Row="2"
-                Style="{StaticResource CardStyle}"
-                Padding="20">
+        <Border
+            Grid.Row="2"
+            Style="{StaticResource CardStyle}"
+            Padding="20">
 
             <Grid>
 
@@ -231,14 +392,15 @@
 
                     <ColumnDefinition Width="*"/>
 
-                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="18"/>
 
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="180"/>
 
                 </Grid.ColumnDefinitions>
 
 
-                <StackPanel Grid.Column="0">
+                <StackPanel
+                    Grid.Column="0">
 
                     <TextBlock
                         Text="DESTINO"
@@ -258,22 +420,38 @@
                 <Button
                     x:Name="BtnTrace"
                     Grid.Column="2"
-                    Content="Executar traceroute"
                     Height="46"
                     VerticalAlignment="Bottom"
                     Style="{StaticResource ModernButton}"
-                    Click="ExecutarTraceroute_Click"/>
+                    Click="ExecutarTraceroute_Click">
+
+                    <StackPanel
+                        Orientation="Horizontal">
+
+                        <TextBlock
+                            Text="&#xE8C9;"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="14"
+                            Margin="0,0,8,0"/>
+
+                        <TextBlock
+                            Text="Executar traceroute"/>
+
+                    </StackPanel>
+
+                </Button>
 
             </Grid>
 
         </Border>
 
 
-        <!-- RESULTADO -->
+        <!-- RESULTADOS -->
 
-        <Border Grid.Row="4"
-                Style="{StaticResource CardStyle}"
-                Padding="24">
+        <Border
+            Grid.Row="4"
+            Style="{StaticResource CardStyle}"
+            Padding="24">
 
             <Grid>
 
@@ -281,71 +459,90 @@
 
                     <RowDefinition Height="Auto"/>
 
-                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="18"/>
 
                     <RowDefinition Height="*"/>
 
                 </Grid.RowDefinitions>
 
 
-                <Grid Grid.Row="0">
+                <!-- TÍTULO -->
 
-                    <Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Text="CAMINHO ATÉ O DESTINO"
+                    Foreground="{StaticResource TextBrush}"
+                    FontSize="16"
+                    FontWeight="Bold"/>
 
-                        <ColumnDefinition Width="*"/>
 
-                        <ColumnDefinition Width="Auto"/>
+                <!-- TABELA -->
 
-                    </Grid.ColumnDefinitions>
-
+                <ScrollViewer
+                    Grid.Row="2"
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Auto">
 
                     <StackPanel>
 
-                        <TextBlock
-                            Text="RESULTADO"
-                            Foreground="{StaticResource TextBrush}"
-                            FontSize="16"
-                            FontWeight="Bold"/>
+                        <!-- CABEÇALHO -->
 
-                        <TextBlock
-                            Text="Saltos identificados até o destino."
-                            Foreground="{StaticResource SecondaryTextBrush}"
-                            FontSize="12"
-                            Margin="0,5,0,0"/>
+                        <Border
+                            Background="#222630"
+                            CornerRadius="8"
+                            Padding="12"
+                            Margin="0,0,0,8">
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="90"/>
+
+                                    <ColumnDefinition Width="*"/>
+
+                                    <ColumnDefinition Width="150"/>
+
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="SALTO"
+                                    Foreground="{StaticResource SecondaryTextBrush}"
+                                    FontWeight="SemiBold"/>
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="ENDEREÇO IP"
+                                    Foreground="{StaticResource SecondaryTextBrush}"
+                                    FontWeight="SemiBold"/>
+
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="LATÊNCIA"
+                                    Foreground="{StaticResource SecondaryTextBrush}"
+                                    FontWeight="SemiBold"/>
+
+                            </Grid>
+
+                        </Border>
+
+
+                        <!-- LINHAS -->
+
+                        <StackPanel
+                            x:Name="TraceResultsPanel"/>
 
                     </StackPanel>
 
-                </Grid>
-
-
-                <Border
-                    Grid.Row="2"
-                    Background="#15181E"
-                    BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="9"
-                    Padding="18">
-
-                    <ScrollViewer
-                        VerticalScrollBarVisibility="Auto"
-                        HorizontalScrollBarVisibility="Auto">
-
-                        <TextBlock
-                            x:Name="TxtTraceResult"
-                            Text="Informe um destino e execute o traceroute."
-                            Foreground="#D5D7DC"
-                            FontFamily="Consolas"
-                            FontSize="14"
-                            TextWrapping="NoWrap"/>
-
-                    </ScrollViewer>
-
-                </Border>
+                </ScrollViewer>
 
             </Grid>
 
         </Border>
 
+    </Grid>
     </Grid>
 
 </Window>

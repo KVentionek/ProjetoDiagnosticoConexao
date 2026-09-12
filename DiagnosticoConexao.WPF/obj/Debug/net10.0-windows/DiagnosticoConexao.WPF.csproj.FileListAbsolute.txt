@@ -30,3 +30,4 @@ E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao.WPF\obj\Debug\net10.
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao.WPF\obj\Debug\net10.0-windows\PortWindow.g.cs
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao.WPF\obj\Debug\net10.0-windows\SecurityWindow.baml
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao.WPF\obj\Debug\net10.0-windows\SecurityWindow.g.cs
+E:\Projetos\C#\ProjetoDiagnosticoConexao\diagnosticoconexao.wpf\obj\Debug\net10.0-windows\DiagnosticoConexao.WPF.sourcelink.json

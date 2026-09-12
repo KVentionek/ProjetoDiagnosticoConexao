@@ -26,3 +26,4 @@ E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao\obj\Debug\net10.0\re
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao\obj\Debug\net10.0\DiagnosticoConexao.pdb
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao\obj\Debug\net10.0\DiagnosticoConexao.genruntimeconfig.cache
 E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao\obj\Debug\net10.0\ref\DiagnosticoConexao.dll
+E:\Projetos\C#\ProjetoDiagnosticoConexao\DiagnosticoConexao\obj\Debug\net10.0\DiagnosticoConexao.sourcelink.json
